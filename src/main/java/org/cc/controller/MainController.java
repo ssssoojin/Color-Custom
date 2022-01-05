@@ -8,16 +8,16 @@ import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
-@RequestMapping("/includes/*")
+@RequestMapping("/member/*")
 public class MainController {
 	
-	 @GetMapping("/header") 
+	 @GetMapping("/join") 
 	 public void viewHeader(){
-	  log.info("header");
+	  log.info("join");
 	  }
-	 @GetMapping("/footer") 
+	 @GetMapping("/login") 
 	 public void viewFooter(){
-	  log.info("footer");
+	  log.info("login");
 	  }
 	 
 	 
