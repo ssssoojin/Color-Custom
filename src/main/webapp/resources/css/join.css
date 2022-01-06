@@ -54,40 +54,30 @@ body{
 	flex-direction: column;
 	align-items: center;
 }
-.login-input-section-wrap{
+.join-input-section-wrap{
 	padding-top: 60px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	/* background : var(--main-pink-color); */
 }
 
-.login-input-wrap{
+.join-input-wrap{
 	width: 465px;
 	height :48px;
 	border: solid 1px var(	--border-gray-color );
 	background: white;
 }
-.password-wrap{
+.password-wrap, .passwordcheck-wrap, .username-wrap, .gender-wrap, .birth-wrap, .email-wrap{
 	margin-top: 13px;
 }
-.login-input-wrap input{
+.join-input-wrap input{
 	border: none;
 	width:430px;
 	margin-top: 10px;
 	font-size: 14px;
 	margin-left: 10px;
 	height:30px;
-}
-.login-button-wrap {
-	padding-top: 13px;
-}
-.login-button-wrap button{
-	width: 465px;
-	height :48px;
-	font-size: 18px;
-	background: var(--main-pink-color);
-	color: white;
-	border: solid 1px var(--main-pink-border-color);
 }
 .join-button-wrap {
 	padding-top: 13px;
@@ -96,10 +86,11 @@ body{
 	width: 465px;
 	height :48px;
 	font-size: 18px;
-	background: var(--main-grey-color);
-	color: black;
-	border: solid 1px var(--main-gray-border-color);
+	background: var(--main-pink-color);
+	color: white;
+	border: solid 1px var(--main-pink-border-color);
 }
+
 .login-stay-sign-in{
 	width: 465px;
 	height: 52px;
@@ -111,14 +102,7 @@ body{
 	justify-content: flex-start;
 	border-bottom: solid 1px var(--border-gray-color);
 }
-.login-stay-sign-in i{
-	font-size: 25px;
-	color: #9ba1a3;
-}
-.login-stay-sign-in span{
-	padding-left: 5px;
-	line-height: 25px;
-}
+
 footer{
    
 	padding-top: 45px;

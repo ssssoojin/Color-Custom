@@ -19,6 +19,14 @@ public class MainController {
 	 public void viewFooter(){
 	  log.info("login");
 	  }
+	 @GetMapping("/start") 
+	 public void viewStart(){
+	  log.info("start");
+	  }
+	 @GetMapping("/main") 
+	 public void viewMain(){
+	  log.info("main");
+	  }
 	 
 	 
 }
