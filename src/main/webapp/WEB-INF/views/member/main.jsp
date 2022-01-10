@@ -46,7 +46,7 @@ max-width: 1600px !important;}
 			<!-- 슬라이드 쇼 -->
 			<div class="carousel-item active">
 				<!--가로-->
-				<img style="height: 780px"
+				<img style="height: 800px"
 					src="/resources/images/blue.png"
 					alt="First slide">
 				<div class="carousel-caption d-none d-md-block">
@@ -342,7 +342,7 @@ keyboard : true
 });
 });
 </script> -->
-
+<%@include file="../includes/quicklist.jsp"%>
 <%@include file="../includes/footer.jsp"%>
 </body>
 </html>
