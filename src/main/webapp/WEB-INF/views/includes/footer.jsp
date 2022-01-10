@@ -3,10 +3,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!DOCTYPE html>
-<html>
     <head>
-        <title>Footer #No</title>
+        <title>Footer</title>
     </head>
     
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
