@@ -39,22 +39,27 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 					<a href="#" class="bp-icon bp-icon-drop" data-info="back to the Codrops article"><span>back to the Codrops article</span></a>
 					<a href="#" class="bp-icon bp-icon-archive" data-info="Blueprints archive"><span>Go to the archive</span></a>
 				</nav> -->
+				<div class="search">
+					<input type='text' placeholder="검색어 입력" class="search-in" />
+					<button class="search-btn">검색</button>
+				</div>
 			</header>
 			<div class="line"></div>
 			<div id="grid-gallery" class="grid-gallery">
 				<section class="grid-wrap">
 					<ul class="grid">
 						<li class="grid-sizer"></li><!-- for Masonry column width -->
+						<!-- 나중에 c:forEach이렇게 받아오면 됨 -->
 						<li>
 							<figure>
 								<img src="/resources/images/1.png" alt="img01"/>
-								<figcaption><h3>Letterpress asymmetrical</h3><p>Chillwave hoodie ea gentrify aute sriracha consequat.</p></figcaption>
+								<figcaption><h3>마찌입니다</h3><p>#핑크 #털복숭이<br>귀여운 강아강아강아강아강아지</p></figcaption>
 							</figure>
 						</li>
 						<li>
 							<figure>
 								<img src="/resources/images/2.png" alt="img02"/>
-								<figcaption><h3>Vice velit chia</h3><p>Laborum tattooed iPhone, Schlitz irure nulla Tonx retro 90's chia cardigan quis asymmetrical paleo. </p></figcaption>
+								<figcaption><h3>c:forEach로 색깔 받아오기</h3><p>c:forEach로 색깔, 사이즈, 이런거 받아오면 될듯</p></figcaption>
 							</figure>
 						</li>
 						<li>
@@ -194,7 +199,9 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 				<section class="slideshow">
 					<ul class="animatable">
 						<li class="show current">
+						
 							<figure>
+							<p class="feed-writer">@작성자</p>
 								<img src="/resources/images/1.png" alt="img01"/>
 								<p class="explain-box">오늘의 컬러는 #YELLOW 라구~!~!</p>
 							</figure>
@@ -205,7 +212,7 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 									<h3>Vice velit chia</h3>
 									<p>Chillwave Echo Park Etsy organic Cosby sweater seitan authentic pour-over. Occupy wolf selvage bespoke tattooed, cred sustainable Odd Future hashtag butcher.</p>
 								</figcaption>
-								<img src="/resources/images/2.png" alt="img02"/>
+								<img src="/resources/images/2.png" alt="img02" class="img-slide-size"/>
 								<p class="explain-box">오늘의 컬러는 #YELLOW 라구~!~!</p>
 							</figure>
 						</li>
@@ -215,7 +222,8 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 									<h3>Brunch semiotics</h3>
 									<p>IPhone PBR polaroid before they sold out meh you probably haven't heard of them leggings tattooed tote bag, butcher paleo next level single-origin coffee photo booth.</p>
 								</figcaption>
-								<img src="/resources/images/3.png" alt="img03"/>
+								<img src="/resources/images/3.png" alt="img03"class="img-slide-size"/>
+								<p class="explain-box">오늘의 컬러는 #YELLOW 라구~!~!</p>
 							</figure>
 						</li>
 						<li>
@@ -224,7 +232,8 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 									<h3>Chillwave nihil occupy</h3>
 									<p>Vice cliche locavore mumblecore vegan wayfarers asymmetrical letterpress hoodie mustache. Shabby chic lomo polaroid, scenester 8-bit Portland Pitchfork VHS tote bag.</p>
 								</figcaption>
-								<img src="/resources/images/4.png" alt="img04"/>
+								<img src="/resources/images/4.png" alt="img04" class="img-slide-size"/>
+								<p class="explain-box">오늘의 컬러는 #YELLOW 라구~!~!</p>
 							</figure>
 						</li>
 						<li>
@@ -233,7 +242,8 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 									<h3>Kale chips lomo biodiesel</h3>
 									<p>Chambray Schlitz pug YOLO, PBR Tumblr semiotics. Flexitarian YOLO ennui Blue Bottle, forage dreamcatcher chillwave put a bird on it craft beer Etsy.</p>
 								</figcaption>
-								<img src="/resources/images/5.png" alt="img05"/>
+								<img src="/resources/images/5.png" alt="img05" class="img-slide-size"/>
+								<p class="explain-box">오늘의 컬러는 #YELLOW 라구~!~!</p>
 							</figure>
 						</li>
 						<li>
@@ -242,7 +252,8 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 									<h3>Exercitation occaecat</h3>
 									<p>Cosby sweater hella lomo Thundercats VHS occupy High Life. Synth pop-up readymade single-origin coffee, fanny pack tousled retro. Fingerstache mlkshk ugh hashtag, church-key ethnic street art pug yr.</p>
 								</figcaption>
-								<img src="/resources/images/6.png" alt="img06"/>
+								<img src="/resources/images/6.png" alt="img06" class="img-slide-size"/>
+								<p class="explain-box">오늘의 컬러는 #YELLOW 라구~!~!</p>
 							</figure>
 						</li>
 						<li>
@@ -251,7 +262,7 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 									<h3>Selfies viral four</h3>
 									<p>Ethnic readymade pug, small batch XOXO Odd Future normcore kogi food truck craft beer single-origin coffee banh mi photo booth raw denim. XOXO messenger bag pug VHS. Forage gluten-free polaroid, twee hoodie chillwave Helvetica.</p>
 								</figcaption>
-								<img src="/resources/images/1.png" alt="img01"/>
+								<img src="/resources/images/1.png" alt="img01" class="img-slide-size"/>
 							</figure>
 						</li>
 						<li>
@@ -261,6 +272,7 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 									<p>Thundercats pour-over four loko skateboard Brooklyn, Etsy sriracha leggings dreamcatcher narwhal authentic 3 wolf moon synth Portland. Shabby chic photo booth Blue Bottle keffiyeh, McSweeney's roof party Carles.</p>
 								</figcaption>
 								<img src="/resources/images/2.png" alt="img02"/>
+								<p class="explain-box">오늘의 컬러는 #YELLOW 라구~!~!</p>
 							</figure>
 						</li>
 						<li>
@@ -270,6 +282,7 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 									<p>Ennui Blue Bottle shabby chic, organic butcher High Life tattooed meggings jean shorts Brooklyn sartorial polaroid. Cray raw denim +1, bespoke High Life Odd Future banh mi chillwave Marfa kogi disrupt paleo direct trade 90's Godard. </p>
 								</figcaption>
 								<img src="/resources/images/3.png" alt="img03"/>
+								<p class="explain-box">오늘의 컬러는 #YELLOW 라구~!~!</p>
 							</figure>
 						</li>
 						<li>
@@ -279,6 +292,7 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 									<p>Typewriter authentic PBR, iPhone mixtape fixie post-ironic fingerstache Pitchfork artisan. Wayfarers master cleanse occupy, Tonx lo-fi swag Truffaut irony whatever Blue Bottle readymade PBR gluten-free. Lomo Pinterest Banksy fap. Retro ennui you probably haven't heard of them iPhone, PBR fashion axe polaroid.</p>
 								</figcaption>
 								<img src="/resources/images/4.png" alt="img04"/>
+								<p class="explain-box">오늘의 컬러는 #YELLOW 라구~!~!</p>
 							</figure>
 						</li>
 						<li>
@@ -288,6 +302,7 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 									<p>Schlitz deserunt pour-over consectetur. Selfies plaid asymmetrical farm-to-table, cred gastropub photo booth narwhal non roof party velit raw denim slow-carb meggings pug. Tempor post-ironic seitan cliche bicycle rights. Meh viral Williamsburg, quinoa 8-bit kale chips YOLO Marfa accusamus.</p>
 								</figcaption>
 								<img src="/resources/images/5.png" alt="img05"/>
+								<p class="explain-box">오늘의 컬러는 #YELLOW 라구~!~!</p>
 							</figure>
 						</li>
 						<li>
@@ -297,6 +312,7 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 									<p>Aliqua High Life art party fixie farm-to-table. Kitsch Echo Park shabby chic, narwhal fugiat Cosby sweater asymmetrical gastropub tofu. Authentic minim Pinterest Blue Bottle beard, aliqua chia XOXO dolor freegan banh mi vegan fugiat.</p>
 								</figcaption>
 								<img src="/resources/images/1.png" alt="img01"/>
+								<p class="explain-box">오늘의 컬러는 #YELLOW 라구~!~!</p>
 							</figure>
 						</li>
 						<li>
