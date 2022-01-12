@@ -36,18 +36,17 @@
           </nav>
         </div>
         <div class="site-header__end">
-        <p class="loginId" style="margin-right:20px!important;">컬러커스텀님</p>
-		<a href="/member/login">마이페이지</a>
-          <a href="/member/join"><i class="bi bi-cart4"></i></a>
+     <a href="/member/login">로그인</a>
+          <a href="/member/join">회원가입</a>
        <%--  <c:choose>
 			<c:when test="${empty userId}">
           <a href="/member/login">로그인</a>
           <a href="/member/join">회원가입</a>
           </c:when>
 		<c:otherwise>
-		dkdlel님
+		<p class="loginId" style="margin-right:20px!important;">컬러커스텀님</p>
 		<a href="/member/login">마이페이지</a>
-          <a href="/member/join"><i class="bi bi-cart3"></i></a>
+          <a href="/member/join"><i class="bi bi-cart4"></i></a>
           </c:otherwise>
 					 </c:choose> --%>
         </div>

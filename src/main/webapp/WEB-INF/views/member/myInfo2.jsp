@@ -19,7 +19,8 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"/>
 <!-- 생년월일 (달력) -->
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="http://momentjs.com/downloads/moment-with-locales.js"></script>
+
 
 </head>
 <body>
@@ -32,7 +33,7 @@
            <div class = "change-myprofile-image">
                 <img class="preview-img" src="http://simpleicon.com/wp-content/uploads/account.png" alt="Preview Image" width="200" height="200"/>
                 <div class="browse-button">
-                    <i class="fa fa-pencil-alt"></i>
+                    <!-- <i class="fa fa-pencil-alt"></i> -->
                     <input type="file" class="browse-input" required name="UploadedFile" id="UploadedFile"/>
                 </div>
                 <span class="Error"></span>
@@ -58,8 +59,8 @@
 			<label>남<input type="radio" name="gender" value="남"></label>
 			<label>여<input type="radio" name="gender" value="여"></label>
 			</div>
-			<div class="change-input-wrap birth-wrap">	
-				<input placeholder="생년월일" type="text" id="datepicker"></input>
+			<div class="change-input-wrap birth-wrap">		
+            <input class="form-control" name="registration_date" id="registration-date" type="date" >
 			</div>
 			<div class="change-input-wrap email-wrap">	
 				<input placeholder="이메일" type="email"></input>
@@ -74,15 +75,7 @@
         </div>
     
 <script>
-$(function() {
-    $( "#datepicker" ).datepicker({
-        dateFormat : 'mm/dd/yy',
-        changeMonth : true,
-        changeYear : true,
-        yearRange: '-100y:c+nn',
-        maxDate: '-1d'
-    });
-});
+
 $(document).ready(function() {
   
     var readURL = function(input) {
@@ -101,6 +94,7 @@ $(document).ready(function() {
     $(".browse-input").on('change', function(){
         readURL(this);
     });
+    
 });
 </script>
 <!-- 이미지 업로드 관련 -->
