@@ -14,7 +14,7 @@ body {
 	line-height: 550px;
 }
 footer{
-	
+	position : fixed;
 	bottom: 0;
 }
 .footer_main{
@@ -24,7 +24,7 @@ footer{
 	width: 100%;
 	text-align: left;
 	font: bold 16px sans-serif;
-	padding: 55px 50px;
+	padding: 23px 50px;
 }
  
 .footer_main .footer-left,

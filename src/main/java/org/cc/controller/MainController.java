@@ -27,6 +27,14 @@ public class MainController {
 	 public void viewMain(){
 	  log.info("main");
 	  }
+	 @GetMapping("/myInfo") 
+	 public void viewmyInfo(){
+	  log.info("myInfo");
+	  }
+	 @GetMapping("/myInfo2") 
+	 public void viewmyInfo2(){
+	  log.info("myInfo2");
+	  }
 	 
 	 
 }

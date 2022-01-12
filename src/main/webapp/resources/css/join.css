@@ -5,6 +5,7 @@
 	--main-pink-color: #fc7b70;
 	--main-pink-border-color: #fa8b85;
 	--main-gray-border-color: #ced1d2;
+	--border-gray-color : #ced1d2;
 }
 
 
@@ -65,7 +66,7 @@ body{
 .join-input-wrap{
 	width: 465px;
 	height :48px;
-	border: solid 1px var(	--border-gray-color );
+	border: solid 1px var(--border-gray-color);
 	background: white;
 }
 .password-wrap, .passwordcheck-wrap, .username-wrap, .gender-wrap, .birth-wrap, .email-wrap{
@@ -133,4 +134,101 @@ footer .copyright-wrap span{
 footer .copyright-wrap p{
 	font-size: 13px;
 	line-height: 15px;
+}
+
+/* 이미지 업로드 관련 */
+.preview
+{
+    padding: 10px;
+    position: relative;
+}
+
+.preview i
+{
+    color: white;
+    font-size: 35px;
+    transform: translate(50px,130px);
+}
+
+.preview-img
+{
+    border-radius: 100%;
+    box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.7);
+}
+
+.browse-button
+{
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    position: absolute; /* Tweak the position property if the element seems to be unfit */
+    top: 60px;
+    left: 15px;
+    background: linear-gradient(180deg, transparent, black);
+    opacity: 0;
+    transition: 0.3s ease;
+}
+
+.browse-button:hover
+{
+    opacity: 1;
+}
+
+.browse-input
+{
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    transform: translate(-1px,-26px);
+    opacity: 0;
+}
+/* 버튼관련 */
+.btn-glyphicon { padding:8px; background:#ffffff; margin-right:4px; }
+.icon-btn { padding: 1px 15px 3px 2px; border-radius:50px;}
+
+/*회원수정 관련*/
+.change-myprofile-image{
+	padding-top: 60px;
+	display: flex;
+	align-items: center;
+}
+.change-input-section-wrap{
+	padding-top: 60px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	/* background : var(--main-pink-color); */
+}
+
+.change-input-wrap{
+	width: 350px;
+	height :48px;
+	border: solid 1px var(--main-pink-border-color);
+	background: white;
+}
+.password-wrap, .passwordcheck-wrap, .username-wrap, .gender-wrap, .birth-wrap, .email-wrap{
+	margin-top: 13px;
+}
+.change-input-wrap input{
+	border: none;
+	width:330px;
+	margin-top: 10px;
+	font-size: 14px;
+	margin-left: 10px;
+	height:30px;
+}
+.change-button-wrap {
+	padding-top: 13px;
+}
+.three-button{
+	padding-top : 13px;
+}
+.icon-btn{
+	margin:0px!important;
+}
+.btn-gray{
+	background-color:var(--border-gray-color)!important;
+}
+.btn-pink{
+	background-color:var(--main-pink-border-color)!important;
 }
