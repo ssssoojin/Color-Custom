@@ -21,6 +21,11 @@ public class FeedController {
 		log.info("feedClick");
 	}
 	
+	@GetMapping("/feedDetail")
+	public void feedDetail() {
+		log.info("feedDetail");
+	}
+	
 	@GetMapping("/feedClickTest")
 	public void feedClickTest() {
 		log.info("feedClickTest");
