@@ -50,14 +50,16 @@ public class MemberController {
 	@PostMapping("/join")
 	public String join(MemberVO vo) throws Exception{
 			
-			log.info("join 진입");
-			
 			// 회원가입 서비스 실행
 			service.register(vo);
 			
 			log.info("join Service 성공");
 			
-			return "redirect:/main";
+			return "redirect:/";
 			
 		}
+	@GetMapping("/join")
+	public void join() {
+		log.info("join 진입");
+	}
 }

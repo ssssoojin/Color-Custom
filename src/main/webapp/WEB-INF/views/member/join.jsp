@@ -24,26 +24,26 @@
 		</header>
 		<section class="join-input-section-wrap">
 			<div class="join-input-wrap">	
-				<input placeholder="아이디" type="text"></input>
+				<input placeholder="아이디" type="text" name="userId"></input>
 			</div>
 			<div class="join-input-wrap password-wrap">	
-				<input placeholder="비밀번호" type="password"></input>
+				<input placeholder="비밀번호" type="password" name="userPwd"></input>
 			</div>
 			<div class="join-input-wrap passwordcheck-wrap">
-				<input placeholder="비밀번호 확인" type="password"></input>
+				<input placeholder="비밀번호 확인" type="password" ></input>
 			</div>
 			<div class="join-input-wrap username-wrap">	
-				<input placeholder="이름" type="text"></input>
+				<input placeholder="이름" type="text" name="userName"></input>
 			</div>
 			<div class="gender-wrap">
-			<label>남<input type="radio" name="gender" value="남"></label>
-			<label>여<input type="radio" name="gender" value="여"></label>
+			<label>남<input type="radio" name="userSex" value="남"></label>
+			<label>여<input type="radio" name="userSex" value="여"></label>
 			</div>
 			<div class="join-input-wrap birth-wrap">	
-				<input placeholder="생년월일" type="text"></input>
+				<input placeholder="생년월일" type="date" name="userBirth"></input>
 			</div>
 			<div class="join-input-wrap email-wrap">	
-				<input placeholder="이메일" type="email"></input>
+				<input placeholder="이메일" type="email" name="userEmail"></input>
 			</div>
 			<div class="join-button-wrap">
 				<input type="button" class="join_button" value="가입하기">

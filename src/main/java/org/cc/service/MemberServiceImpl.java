@@ -15,7 +15,7 @@ public class MemberServiceImpl implements MemberService{
 	private MemberMapper mapper;
 	
 	public MemberVO register(MemberVO vo) {
-		// TODO Auto-generated method stub
+		mapper.register(vo);
 		return null;
 	}
 
