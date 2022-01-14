@@ -7,10 +7,15 @@
 <title>회원가입</title>
 <link rel="stylesheet" href="/resources/css/join.css">
 <script src="https://kit.fontawesome.com/51db22a717.js" crossorigin="anonymous"></script>
+<script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
 </head>
 <body>
 	<%--  <%@include file="../includes/header.jsp"%>  --%>
 <div class="main-container">
+<form id="join_form" method="post">
 		<div class="main-wrap">
 		<header>
 			<div class="logo-wrap">
@@ -41,7 +46,7 @@
 				<input placeholder="이메일" type="email"></input>
 			</div>
 			<div class="join-button-wrap">
-				<button>가입하기</button>
+				<input type="button" class="join_button" value="가입하기">
 			</div>
 		</section>
 		<footer>
@@ -51,7 +56,18 @@
 			</div>
 		</footer>
 		</div>
+		</form>
 	</div>
+<script>
 
+$(document).ready(function(){
+	//회원가입 버튼(회원가입 기능 작동)
+	$(".join_button").click(function(){
+		$("#join_form").attr("action", "/member/join");
+		$("#join_form").submit();
+	});
+});
+
+</script>
 </body>
 </html>

@@ -10,7 +10,30 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 		
   	<context:component-scan
-		base-package="org.cc.*"></context:component-scan> 
-	
+		base-package="org.cc.controller"></context:component-scan> 
+		<context:component-scan
+		base-package="org.cc.mapper"></context:component-scan> 
+		<context:component-scan
+		base-package="org.cc.service"></context:component-scan> 
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="driverClassName"
+			value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+		<property name="jdbcUrl"
+			value="jdbc:log4jdbc:mysql://localhost:3306/ccdb?useSSL=false"></property>
+		<property name="username" value="cc"></property>
+		<property name="password" value="cc"></property>
+	</bean>
+
+	<!-- HikariCP configuration -->
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource"
+		destroy-method="close">
+		<constructor-arg ref="hikariConfig"></constructor-arg>
+	</bean>
+
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<mybatis-spring:scan base-package="org.cc.mapper" />
 
 </beans>
