@@ -37,6 +37,10 @@ public class MemberController {
 		
 		return "redirect:/";
 	}
+	@GetMapping("/main") 
+	 public void viewMain(){
+	  log.info("main");
+	  }
 	
 	@GetMapping("/logout")
 	public String logout(HttpSession session) throws Exception{
@@ -55,7 +59,7 @@ public class MemberController {
 			
 			log.info("join Service 성공");
 			
-			return "redirect:/";
+			return "redirect:/member/main";
 			
 		}
 	@GetMapping("/join")
