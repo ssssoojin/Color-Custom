@@ -42,28 +42,26 @@
         </div>
         
         <div class="col-md-2">
+        <c:forEach var="member" items="${member}">
         <section class="change-input-section-wrap">
 			<div class="change-input-wrap">	
-				<input placeholder="아이디" type="text"></input>
+				<input placeholder="아이디" type="text">${member.userId}
 			</div>
 			<div class="change-input-wrap password-wrap">	
-				<input placeholder="비밀번호" type="password"></input>
-			</div>
-			<div class="change-input-wrap passwordcheck-wrap">
-				<input placeholder="비밀번호 확인" type="password"></input>
+				<input placeholder="비밀번호" type="password">${member.userPwd}
 			</div>
 			<div class="change-input-wrap username-wrap">	
-				<input placeholder="이름" type="text"></input>
+				<input placeholder="이름" type="text">${member.userName}
 			</div>
 			<div class="gender-wrap">
 			<label>남<input type="radio" name="gender" value="남"></label>
 			<label>여<input type="radio" name="gender" value="여"></label>
 			</div>
 			<div class="change-input-wrap birth-wrap">	
-            <input class="form-control" name="registration_date" id="registration-date" type="date" >
+            <input class="form-control" name="registration_date" id="registration-date" type="date" >${member.userBirth}
 			</div>
 			<div class="change-input-wrap email-wrap">	
-				<input placeholder="이메일" type="email"></input>
+				<input placeholder="이메일" type="email">${member.userEmail}
 			</div>
 			<div class="three-button">
         	<a class="btn icon-btn btn-gray" href="#"><span class="glyphicon btn-glyphicon glyphicon-repeat img-circle text"></span>취소</a>
@@ -71,6 +69,7 @@
 			<a class="btn icon-btn btn-danger" href="#"><span class="glyphicon btn-glyphicon glyphicon-trash img-circle text-danger"></span>탈퇴</a>
        </div>
        </section>
+     </c:forEach>
         </div>
         </div>
     

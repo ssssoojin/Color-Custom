@@ -11,9 +11,6 @@
     <link rel="stylesheet" href="/resources/style/style.css" />
     <link rel="stylesheet" href="/resources/style/header-8.css" />
     
-  	<!-- 아이콘사용 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-    
   </head>
   <body>
     <!-- Header Start -->
@@ -36,19 +33,19 @@
           </nav>
         </div>
         <div class="site-header__end">
-     <a href="/member/login">로그인</a>
-          <a href="/member/join">회원가입</a>
-       <%--  <c:choose>
-			<c:when test="${empty userId}">
-          <a href="/member/login">로그인</a>
-          <a href="/member/join">회원가입</a>
-          </c:when>
-		<c:otherwise>
-		<p class="loginId" style="margin-right:20px!important;">컬러커스텀님</p>
-		<a href="/member/login">마이페이지</a>
-          <a href="/member/join"><i class="bi bi-cart4"></i></a>
-          </c:otherwise>
-					 </c:choose> --%>
+          <!-- 로그인 하지 않은 상태 -->
+                <c:if test = "${member == null }">
+                    <div class="login_button"><a href="/member/login">로그인</a></div>
+                    <span><a href="/member/join">회원가입</a></span>                
+                </c:if>  
+                 <!-- 로그인한 상태 -->
+                <c:if test="${ member != null }">
+            <p class="loginId" style="margin-right:20px!important;">${member.userId}님</p>
+          <a href="/member/logout.do">로그아웃</a>
+		<a href="/member/myInfo?userId=${member.userId}">마이페이지</a>
+          <a href="/member/cart"><i class="bi bi-cart4"></i>장바구니</a>
+          
+                </c:if>  
         </div>
       </div>
     </header>

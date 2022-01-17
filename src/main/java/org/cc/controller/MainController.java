@@ -6,34 +6,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.extern.log4j.Log4j;
 
-
+@Controller
 @Log4j
-
+@RequestMapping("/includes/*")
 public class MainController {
 	
-	 @GetMapping("/join") 
+	 @GetMapping("/header") 
 	 public void viewHeader(){
-	  log.info("join");
+	  log.info("header");
 	  }
-	 @GetMapping("/login") 
+	 @GetMapping("/footer") 
 	 public void viewFooter(){
-	  log.info("login");
-	  }
-	 @GetMapping("/start") 
-	 public void viewStart(){
-	  log.info("start");
-	  }
-	 @GetMapping("/main") 
-	 public void viewMain(){
-	  log.info("main");
-	  }
-	 @GetMapping("/myInfo") 
-	 public void viewmyInfo(){
-	  log.info("myInfo");
-	  }
-	 @GetMapping("/myInfo2") 
-	 public void viewmyInfo2(){
-	  log.info("myInfo2");
+	  log.info("footer");
 	  }
 	 
 	 

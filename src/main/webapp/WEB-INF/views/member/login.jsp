@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+       <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +8,11 @@
 <title>로그인</title>
 <link rel="stylesheet" href="/resources/css/login.css">
 <script src="https://kit.fontawesome.com/51db22a717.js" crossorigin="anonymous"></script>
+
+<script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
 </head>
 <body>
 <div class="main-container">
@@ -22,24 +28,29 @@
 				<img src="/resources/images/loginlogo.png">
 			</div>
 		</header>
+		<form id="login_form" method="post">
 		<section class="login-input-section-wrap">
 			<div class="login-input-wrap">	
-				<input placeholder="아이디" type="text"></input>
+				<input placeholder="아이디" type="text" name="userId"></input>
 			</div>
 			<div class="login-input-wrap password-wrap">	
-				<input placeholder="비밀번호" type="password"></input>
+				<input placeholder="비밀번호" type="password" name="userPwd"></input>
 			</div>
 			<div class="login-stay-sign-in">
 				<i class="far fa-check-circle"></i>
 				<span>로그인 유지</span>
 			</div>
+			 <c:if test = "${msg == false }">
+                <div class = "login_warn">사용자 ID 또는 비밀번호를 잘못 입력하셨습니다.</div>
+            </c:if>
 			<div class="login-button-wrap">
-				<button>로그인</button>
+				<input type="button" class="login_button" value="로그인">
 			</div>
 			<div class="join-button-wrap">
-				<button>회원가입</button>
+				<input type="button" class="join_button" value="회원가입">
 			</div>
 		</section>
+		</form>
 		<footer>
 			<div class="copyright-wrap">
 			<span>Color Custom </span>
@@ -48,5 +59,18 @@
 		</footer>
 		</div>
 	</div>
+	
+	
+ 
+<script>
+ 
+    /* 로그인 버튼 클릭 메서드 */
+    $(".login_button").click(function(){
+    	  /* 로그인 메서드 서버 요청 */
+        $("#login_form").attr("action", "/member/login");
+        $("#login_form").submit();
+    });
+ 
+</script>
 </body>
 </html>

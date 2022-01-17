@@ -37,7 +37,7 @@ body{
 	border: solid 1px var(--border-gray-color);
 }
 .main-container .main-wrap .logo-wrap{
-	padding-top:55px;
+	padding-top:28px;
 }
 .main-container .main-wrap .logo-wrap img
 {
@@ -55,8 +55,96 @@ body{
 	flex-direction: column;
 	align-items: center;
 }
+
+/* 중복아이디 존재하지 않는경우 */
+	.id_input_re_1{
+		color : green;
+		display : none;
+	}
+	/* 중복아이디 존재하는 경우 */
+	.id_input_re_2{
+		color : red;
+		display : none;
+	}
+span {
+	text-align: left!important;
+}
+.mail_check_wrap{
+	width:467px;
+	margin-top: 21px;
+}
+#mail_check_input_box_false{
+    background-color:#ebebe4;
+}
+ 
+#mail_check_input_box_true{
+    background-color:white;
+}
+.mail_check_input_box{
+	border: 1px solid black;
+    height: 24px;
+    padding: 10px 14px;
+    width: 280px;
+    float: left;
+}
+.mail_check_input{
+	width:100%;
+	height:100%;
+	border:none;
+	font-size:17px;
+}
+.mail_check_button{
+    border: 1px solid black;
+    height: 45px;
+    width: 30%;
+    float: right;
+    line-height: 42px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 900;
+    background-color: #ececf7;
+    cursor: pointer;
+}
+
+/* 유효성 검사 문구 */
+ 
+.final_id_ck{
+    display: none;
+}
+.final_pw_ck{
+    display: none;
+}
+.final_pwck_ck{
+    display: none;
+}
+.final_name_ck{
+    display: none;
+}
+.final_mail_ck{
+    display: none;
+}
+
+ 
+/* 비밀번호 확인 일치 유효성검사 */
+.pwck_input_re_1{
+        color : green;
+        display : none;    
+}
+.pwck_input_re_2{
+        color : red;
+        display : none;    
+}    
+ 
+.correct{
+    color : green;
+}
+.incorrect{
+    color : red;
+}
+ 
+
 .join-input-section-wrap{
-	padding-top: 60px;
+	padding-top: 20px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;

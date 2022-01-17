@@ -1,5 +1,7 @@
 package org.cc.service;
 
+import java.util.List;
+
 import org.cc.domain.MemberVO;
 import org.cc.mapper.MemberMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +23,16 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public MemberVO login(MemberVO vo) {
-		// TODO Auto-generated method stub
-		return null;
+		return mapper.login(vo);
 	}
 
+	@Override
+	public int idCheck(String userId) {
+		return mapper.idCheck(userId);
+	}
+	@Override
+	public List<MemberVO> getMemberInfo(String userId) {
+		List<MemberVO> memberInfo = mapper.getMemberInfo(userId);
+		return memberInfo;
+	}
 }
