@@ -74,6 +74,7 @@ public class MemberController {
 			service.register(vo);
 			
 			log.info("join Service 성공");
+			log.info("생일 : "+ vo.getUserBirth());
 			
 			return "redirect:/member/login";
 			
@@ -98,12 +99,12 @@ public class MemberController {
 	}
 
     /* 메인페이지 로그아웃 */
-    @GetMapping("lotout.do")
+    @GetMapping("logout.do")
     public String logout(HttpServletRequest request) throws Exception{
     	log.info("logout() 진입");
     	HttpSession session = request.getSession();
     	 session.invalidate();
-         return "redirect:/main";   
+         return "redirect:/member/main";   
     }
  
 	 /* 이메일 인증 */
@@ -147,11 +148,31 @@ public class MemberController {
 	     return num;
     }
   
-    /* 상품 상세 */
+    /* 회원 상세 */
 	@GetMapping("/myInfo")
 	public void memberDetail(@RequestParam("userId") String userId, Model model) {
 		
 		log.info("memberDetail()..........");
 		model.addAttribute("member", service.getMemberInfo(userId));
+	
 	}
+	 /* 회원 수정 */
+	@GetMapping("/updateInfo")
+	public void updateInfo(@RequestParam("userId") String userId, Model model) {
+		
+		log.info("updateInfo()..........");
+		model.addAttribute("member", service.getMemberInfo(userId));
+
+	}
+	/* 회원 수정 */
+	@PostMapping("/updateInfo")
+	public String updateInfo(MemberVO vo, RedirectAttributes rttr) {
+				log.info("updateInfo2: " + vo.getUserBirth());
+				
+				service.updateInfo(vo);
+				
+				return "redirect:/member/myInfo?userId="+vo.getUserId();
+			}	
+			
+	
 }

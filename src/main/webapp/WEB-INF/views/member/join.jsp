@@ -49,7 +49,7 @@
 			<label>여<input type="radio" name="userSex" value="여"></label>
 			</div>
 			<div class="join-input-wrap birth-wrap">	
-				<input placeholder="생년월일" type="date" name="userBirth">
+				<input placeholder="생년월일" type="date" name="userBirth" id="userBirth">
 			</div>
 			<div class="join-input-wrap email-wrap">	
 				<input class="mail_input" placeholder="이메일" type="email" name="userEmail">
@@ -108,6 +108,7 @@ $(document).ready(function(){
        
 		//$("#join_form").attr("action", "/member/join");
 		//$("#join_form").submit();
+		
 		
         /* 아이디 유효성검사 */
         if(id == ""){
@@ -274,6 +275,7 @@ $(document).ready(function(){
 		 return form.test(email);
 	}
 	 
+	
 });
 
 </script>

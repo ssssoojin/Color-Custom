@@ -70,6 +70,11 @@
         $("#login_form").attr("action", "/member/login");
         $("#login_form").submit();
     });
+    /*회원가입 버튼 클릭 메서드 */
+    $(".join_button").click(function(){
+    	  /* 로그인 메서드 서버 요청 */
+    	 location.href="/member/join";
+    });
  
 </script>
 </body>

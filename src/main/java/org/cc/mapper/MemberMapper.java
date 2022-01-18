@@ -12,5 +12,6 @@ public interface MemberMapper {
     // 아이디 중복 검사
  	public int idCheck(String userId);
  	// 회원정보
-	public List<MemberVO> getMemberInfo(String userId);
+	public MemberVO getMemberInfo(String userId);
+	public int updateInfo(MemberVO vo);
 }
