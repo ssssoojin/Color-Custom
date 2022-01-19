@@ -123,10 +123,10 @@ img{
     font-weight: 400;
 }
 .purchase-info {
-	margin-top: 3rem;
+	margin-top: 2rem;
 }
 .purchase-info input,
-.purchase-info .btn{
+.purchase-info .bt{
     border: 1.5px solid #ddd;
     border-radius: 25px;
     text-align: center;
@@ -138,28 +138,51 @@ img{
 .purchase-info input{
     width: 60px;
 }
-.purchase-info .btn{
+.purchase-info .bt{
     cursor: pointer;
     color: #fff;
 }
-.purchase-info .btn:first-of-type{
+.purchase-info .bt:first-of-type{
     background: #256eff;
 }
-.purchase-info .btn:last-of-type{
+.purchase-info .bt:last-of-type{
     background: #f64749;
 }
-.purchase-info .btn:hover{
+.purchase-info .bt:hover{
     opacity: 0.9;
 }
 
-/*@media (max-width: 768px) {
-    .product-content{
-    	padding: 3rem 0 0 2rem;
-		float: right;
-	    width: 50%;
-	    height: 100%;
-    }
-}*/
+.handle-counter { overflow: hidden; }
+
+.handle-counter .counter-minus,  .handle-counter .counter-plus,  .handle-counter input {
+  float: left;
+  text-align: center;
+}
+
+.handle-counter .counter-minus,  .handle-counter .counter-plus { text-align: center; }
+
+.handle-counter input {
+  width: 50px;
+  border-width: 1px;
+  border-left: none;
+  border-right: none;
+}
+
+.btn {
+  padding: 6px 12px;
+  border: 1px solid transparent;
+  color: #fff;
+  border-radius: 25px;
+}
+
+.btn:disabled, .btn:disabled:hover {
+  background-color: darkgrey;
+  cursor: not-allowed;
+}
+
+.btn-primary { background-color: #009dda; }
+
+.btn-primary:hover, .btn-primary:focus { background-color: #0486b9; }
 
 
 /* 푸터 */
