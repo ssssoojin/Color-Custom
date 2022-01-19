@@ -9,7 +9,6 @@
 <title>회원정보수정</title>
 <link rel="stylesheet" href="/resources/css/join.css">
 
-
 <!-- 버튼관련 -->
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -18,10 +17,10 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"/>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"  crossorigin="anonymous"/> <!-- integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"  crossorigin="anonymous"/> <!-- integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" -->
 <!-- 생년월일 (달력) -->
-<script src="http://momentjs.com/downloads/moment-with-locales.js"></script>
+<!-- <script src="http://momentjs.com/downloads/moment-with-locales.js"></script> -->
 
 
 </head>
@@ -36,8 +35,12 @@
                 <img class="preview-img" src="http://simpleicon.com/wp-content/uploads/account.png" alt="Preview Image" width="200" height="200"/>
                 <div class="browse-button">
                     <!-- <i class="fa fa-pencil-alt"></i> -->
-                    <input type="file" class="browse-input" required name="UploadedFile" id="UploadedFile"/>
+                    <input type="file" class="browse-input" required name="uploadFile" id="UploadedFile"/>
                 </div>
+                <div class="uploadDiv">
+                 <div class="uploadResult">
+                        <ul></ul>
+                    </div></div>
                 <span class="Error"></span>
             </div>
         
@@ -87,10 +90,27 @@
     
         </div>
         </div>
-    
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script>
 
 $(document).ready(function() {
+	
+	// 업로드 파일 확장자 필터링
+	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");  //정규식
+	var maxSize = 5242880;  //5MB
+	
+	function checkExtension(fileName, fileSize) {
+		if (fileSize >= maxSize) {
+			alert("파일 사이즈 초과");
+			return false;
+		}
+		
+		if (regex.test(fileName)) {
+			alert("해당 종류의 파일은 업로드할 수 없습니다.");
+			return false;
+		}
+		return true;
+	}
   
     var readURL = function(input) {
         if (input.files && input.files[0]) {
@@ -98,11 +118,9 @@ $(document).ready(function() {
 
             reader.onload = function (e) {
                 $('.preview-img').attr('src', e.target.result);
-            console.log(e.target.result);
             }
     
             reader.readAsDataURL(input.files[0]);
-            console.log(input.files[0]);
         }
     }
     
@@ -121,20 +139,85 @@ $(document).ready(function() {
 		 if (operation === 'update') {
 		      console.log("수정 clicked");
 		      formObj.attr("action", "/member/updateInfo").attr("method", "post"); 
-		      
-		      formObj.submit()
+		      //formObj.submit();
+		      var str = "";
+		      $(".uploadResult ul li").each(function(i,obj){
+		          var jobj = $(obj);
+		          console.dir("jobj :"+jobj);
+		         
+		        	  console.log("이미지 정보 출력");
+		          str += "<input type='hidden' name='attachImg["+i+"].fileName' value='"+jobj.data("filename")+"'>";
+		          str += "<input type='hidden' name='attachImg["+i+"].uuid' value='"+jobj.data("uuid")+"'>";
+		          str += "<input type='hidden' name='attachImg["+i+"].uploadPath' value='"+jobj.data("path")+"'>";
+		          str += "<input type='hidden' name='attachImg["+i+"].fileType' value='"+jobj.data("type")+"'>";
+		          
+		      		formObj.append(str);
+		      });
+				      formObj.submit();
 		 }
     });
-		
     
+    function showUploadFile(uploadResultArr){
+		  if(!uploadResultArr || uploadResultArr.length == 0){return ;}
+		  var uploadUL = $(".uploadResult ul");
+		  var str = "";
+		  
+		  $(uploadResultArr).each(function(i, obj){
+		  
+        	  var fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" + obj.uuid + "_" + obj.fileName);
+	          str+= "<li data-path = '" + obj.uploadPath + "' data-uuid = '" + obj.uuid + "'data-filename='"
+				+ obj.fileName + "' data-type = '" + obj.fileType + "'><div>";
+				str+= "</div>";
+				str+ "</li>";
+		  });
+			uploadUL.append(str);
+	  }
+ /*    var str = "";
+    $(".uploadResult ul li").each(function(i,obj){
+        var jobj = $(obj);
+        console.dir(jobj);
+        
+        str += "<input type='hidden' name='attachList["+i+"].fileName' value='"+jobj.data("filename")+"'>";
+        str += "<input type='hidden' name='attachList["+i+"].uuid' value='"+jobj.data("uuid")+"'>";
+        str += "<input type='hidden' name='attachList["+i+"].uploadPath' value='"+jobj.data("path")+"'>";
+    });
+    formObj.append(str);//.submit();
+     */
+     var cloneObj =$(".uploadDiv").clone();
+    $("input[type='file']").change(function(e){
+		var formData = new FormData();  //폼 태그에 대응되는 객체
+		var inputFile = $("input[name='uploadFile']");
+		var files = inputFile[0].files;
+		console.log(files);
+		
+		for (var i = 0; i < files.length; i++) {
+			if (!checkExtension(files[i].name, files[i].size)) {
+				return false;
+			}
+			formData.append("uploadFile", files[i]);
+		}
+	
+		$.ajax({
+			url: '/uploadAjaxAction',
+			processData: false,
+			contentType: false,
+			data: formData,
+			type: 'POST',
+			dataType: 'json',  
+			success: function(result){
+				console.log(result); 
+				showUploadFile(result);
+			}
+		});
+	});
+
 });
 </script>
 <!-- 이미지 업로드 관련 -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<!-- 생년월일 (달력) -->
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <%@include file="../includes/footer.jsp"%>
 </body>
 </html>

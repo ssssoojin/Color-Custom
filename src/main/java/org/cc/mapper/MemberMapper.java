@@ -14,4 +14,5 @@ public interface MemberMapper {
  	// 회원정보
 	public MemberVO getMemberInfo(String userId);
 	public int updateInfo(MemberVO vo);
+	
 }

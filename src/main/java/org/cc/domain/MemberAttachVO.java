@@ -15,4 +15,6 @@ public class MemberAttachVO {
 	
 	/* 회원 id */
 	private String userId;
+	
+	private boolean fileType;
 }

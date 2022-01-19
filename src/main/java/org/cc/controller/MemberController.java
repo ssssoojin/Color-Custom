@@ -1,13 +1,18 @@
 package org.cc.controller;
 
+import java.util.List;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.cc.domain.MemberAttachVO;
 import org.cc.domain.MemberVO;
 import org.cc.service.MemberService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
@@ -41,6 +46,7 @@ public class MemberController {
 		
 		HttpSession session = req.getSession();//세션 초기화
 		MemberVO login = service.login(vo);
+		List<MemberAttachVO> image = vo.getAttachImg();
 		
 		if(login == null) { // 일치하지 않는 아이디, 비밀번호 입력 경우
 			session.setAttribute("member", null);
@@ -49,6 +55,7 @@ public class MemberController {
 			
 		}else {  // 일치하는 아이디, 비밀번호 경우 (로그인 성공)
 			session.setAttribute("member", login);
+			session.setAttribute("img", image);
 		}
 		
 		return "redirect:/member/main";
@@ -167,12 +174,24 @@ public class MemberController {
 	/* 회원 수정 */
 	@PostMapping("/updateInfo")
 	public String updateInfo(MemberVO vo, RedirectAttributes rttr) {
-				log.info("updateInfo2: " + vo.getUserBirth());
+			log.info("==========================");
+			log.info("updateInfo: " + vo);
+			log.info("vo.getAttachImg "+vo.getAttachImg());
+			 if (vo.getAttachImg() != null) {
+			        vo.getAttachImg().forEach(attach -> log.info("attach Img : "+attach));
+			    }
 				
 				service.updateInfo(vo);
+				rttr.addFlashAttribute("result",vo.getUserId());
 				
 				return "redirect:/member/myInfo?userId="+vo.getUserId();
 			}	
 			
-	
+	// 첨부파일 목록
+		@GetMapping(value = "/getAttachImg", produces = MediaType.APPLICATION_JSON_VALUE)
+		@ResponseBody
+		public ResponseEntity<List<MemberAttachVO>> getAttachImg(String userId) {
+			log.info("getAttachImg " + userId);
+			return new ResponseEntity<>(service.getAttachImg(userId), HttpStatus.OK);
+		}
 }

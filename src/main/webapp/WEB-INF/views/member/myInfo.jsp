@@ -36,7 +36,7 @@
                 <img class="preview-img" src="http://simpleicon.com/wp-content/uploads/account.png" alt="Preview Image" width="200" height="200"/>
                 <div class="browse-button">
                     <!-- <i class="fa fa-pencil-alt"></i> -->
-                    <input type="file" class="browse-input" required name="UploadedFile" id="UploadedFile"/>
+                    <input type="file" class="browse-input" required name="UploadedFile" id="UploadedFile" disabled/>
                 </div>
                 <span class="Error"></span>
             </div>
@@ -88,28 +88,40 @@
 <script>
 
 $(document).ready(function() {
-  
-    var readURL = function(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
+	
+	    	
+	  
+		// 익명함수 정의함과 동시에 호출
+		(function(){
+		var userId = "${member.userId}";
+		$.getJSON("/member/getAttachImg", {userId: userId}, function(arr){
+			console.log(arr);
+			
+			var str="";
+	        
+			$(arr).each(function(i,attach) {
+				if ('${img==null}') {//이미지가 없는경우
+					 $('.preview-img').attr('src','http://simpleicon.com/wp-content/uploads/account.png');
+				} 
+				else{
+					// 썸네일 나오게 처리
+	                  var fileCallPath = encodeURIComponent(obj.uploadPath +  "/s_" + obj.uuid + "_" + obj.fileName);
+	                  
+	                  var reader = new FileReader();
 
-            reader.onload = function (e) {
-                $('.preview-img').attr('src', e.target.result);
-            }
-    
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-    
+	  	            reader.onload = function (e) {
+	  	                $('.preview-img').attr('src', '/display?fileName=" + fileCallPath + "');
+	  	            }
+					}
+				
+			});
+		})();
 
-    $(".browse-input").on('change', function(){
-        readURL(this);
-    });
-    
+
 });
 </script>
 <!-- 이미지 업로드 관련 -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <!-- 생년월일 (달력) -->

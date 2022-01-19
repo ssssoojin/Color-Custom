@@ -1,6 +1,8 @@
 package org.cc.domain;
 
 
+import java.util.List;
+
 import lombok.Data;
 @Data
 public class MemberVO {
@@ -13,6 +15,6 @@ public class MemberVO {
 	private String userEmail;
 	private String userImage;
 	
-	
+	private List<MemberAttachVO> attachImg;
 	
 }

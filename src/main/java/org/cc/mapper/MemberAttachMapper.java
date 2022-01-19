@@ -5,5 +5,9 @@ import java.util.List;
 import org.cc.domain.MemberAttachVO;
 
 public interface MemberAttachMapper {
-	public List<MemberAttachVO> findById(String userId);
+	public List<MemberAttachVO> findByUserId(String userId);
+	public void insert(MemberAttachVO vo);
+	public void delete(String uuid);
+	
+	
 }

@@ -13,7 +13,8 @@ public interface MemberService {
 	public int idCheck(String userId);
 	//회원 정보
 	public MemberVO getMemberInfo(String userId);
-	public boolean updateInfo(MemberVO vo);
 	
-	public List<MemberAttachVO> getAttachList(String userId);
+	public void updateInfo(MemberVO vo);
+	
+	public List<MemberAttachVO> getAttachImg(String userId);
 }
