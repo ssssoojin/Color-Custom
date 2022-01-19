@@ -203,9 +203,9 @@ input.search-in{
 .explain-box{
 	background:black;
 	font-size: 200%;
-	padding:15px;
-	padding-bottom:50px;
 	border:3px solid #d7dadb;
+	height:250px;
+	padding:30px;
 
 }
 /* Navigation */

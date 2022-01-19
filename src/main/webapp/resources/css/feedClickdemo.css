@@ -47,11 +47,12 @@ a:hover {
 	margin: 0 0 0.6em 0;
 	float: center;
 	font-weight: 400;
-	border-bottom:10px solid #D7DADB;
-	padding-bottom:22px;
-
 }
 
+.title-line{
+	border-bottom:10px solid #D7DADB;
+	padding-bottom:22px;
+}
 .container > header > span {
 	display: block;
 	position: relative;
