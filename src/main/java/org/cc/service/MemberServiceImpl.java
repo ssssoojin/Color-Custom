@@ -74,4 +74,18 @@ public class MemberServiceImpl implements MemberService{
 
 	
 
+<<<<<<< HEAD
+=======
+	@Override
+	public List<MemberAttachVO> getAttachList(String userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+//	@Override
+//	public List<AttachImageVO> getAttachList(String userId) {
+//		// TODO Auto-generated method stub
+//		return attachMapper.;
+//	}
+>>>>>>> d2c8e7dcd2562a74ce8f80c03ca095b0372b20ee
 }
