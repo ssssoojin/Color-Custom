@@ -50,8 +50,14 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public List<AttachImageVO> getAttachList(String userId) {
+	public List<MemberAttachVO> getAttachList(String userId) {
 		// TODO Auto-generated method stub
-		return attachMapper.;
+		return null;
 	}
+
+//	@Override
+//	public List<AttachImageVO> getAttachList(String userId) {
+//		// TODO Auto-generated method stub
+//		return attachMapper.;
+//	}
 }
