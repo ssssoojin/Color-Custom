@@ -33,66 +33,63 @@
         <div class="col-md-offset-4 col-md-2">
         
            <div class = "change-myprofile-image">
-                <img class="preview-img" src="http://simpleicon.com/wp-content/uploads/account.png" alt="Preview Image" width="200" height="200"/>
-                <div class="browse-button">
-                    <!-- <i class="fa fa-pencil-alt"></i> -->
+                <img class="preview-img" id="preview-img" src="http://simpleicon.com/wp-content/uploads/account.png" alt="Preview Image" width="200" height="200"/>
+                <!-- <div class="browse-button">
+                    <i class="fa fa-pencil-alt"></i>
                     <input type="file" class="browse-input" required name="UploadedFile" id="UploadedFile" disabled/>
-                </div>
+                </div> -->
                 <span class="Error"></span>
             </div>
         
         </div>
         <div class="col-md-2">
         <c:set var="member" value="${member}"/>
+        <form id="updateForm">
         <section class="change-input-section-wrap">
         	<div class="toptitle_id">아이디 :</div>
 			<div class="change-input-wrap">	
-				 <input placeholder="아이디" type="text" value='<c:out value="${member.userId}" />' disabled>
+				 <input placeholder="아이디" type="text" value='<c:out value="${member.userId}" />' readonly>
 			</div>
 			<div class="toptitle">비밀번호 :</div>
 			<div class="change-input-wrap password-wrap">	
-				<input placeholder="비밀번호" type="password" value='<c:out value="${member.userPwd}" />' disabled>
+				<input placeholder="비밀번호" type="password" value='<c:out value="${member.userPwd}" />' readonly>
 			</div>
 			<div class="toptitle">이름 :</div>
 			<div class="change-input-wrap username-wrap">	
-				<input placeholder="이름" type="text" value='<c:out value="${member.userName}" />' disabled>
+				<input placeholder="이름" type="text" value='<c:out value="${member.userName}" />' readonly>
 			</div>
 			<div class="gender-wrap">
 			<div class="toptitle_sex">성별 :</div>
 			<c:if test= '${member.userSex=="남"}'>
-				<label>남<input type="radio" name="gender" value="남" checked disabled></label>
-				<label>여<input type="radio" name="gender" value="여" disabled></label>
+				<label>남<input type="radio" name="gender" value="남" checked readonly></label>
+				<label>여<input type="radio" name="gender" value="여" readonly></label>
 			</c:if>
 			<c:if test= '${member.userSex=="여"}'>
-				<label>남<input type="radio" name="gender" value="남" disabled></label>
-				<label>여<input type="radio" name="gender" value="여" checked disabled></label>
+				<label>남<input type="radio" name="gender" value="남" readonly></label>
+				<label>여<input type="radio" name="gender" value="여" checked readonly></label>
 			</c:if> 
 			</div>
 			<div class="toptitle">생일 :</div>
 			<div class="change-input-wrap birth-wrap">	
-            <input class="form-control" name="registration_date" id="registration-date" type="date" value='<c:out value="${member.userBirth}" />' disabled>
+            <input class="form-control" name="registration_date" id="registration-date" type="date" value='<c:out value="${member.userBirth}" />' readonly>
 			</div>
 			<div class="toptitle">이메일 :</div>
 			<div class="change-input-wrap email-wrap">	
-				<input placeholder="이메일" type="email" value='<c:out value="${member.userEmail}" />' disabled>
+				<input placeholder="이메일" type="email" value='<c:out value="${member.userEmail}" />' readonly>
 			</div>
 			<div class="three-button">
 			<a class="btn icon-btn btn-pink" href="/member/updateInfo?userId=${member.userId}"><span class="glyphicon btn-glyphicon glyphicon-refresh img-circle text-warning"></span>수정</a>
-			<a class="btn icon-btn btn-danger" href="#"><span class="glyphicon btn-glyphicon glyphicon-trash img-circle text-danger"></span>탈퇴</a>
+			<a class="btn icon-btn btn-danger" id="del_btn" data-oper="delete"><span class="glyphicon btn-glyphicon glyphicon-trash img-circle text-danger"></span>탈퇴</a>
        </div>
        </section>
-    
+    </form>
         </div>
         </div>
     
 <script>
 
 $(document).ready(function() {
-	
-	    	
-	  
-		// 익명함수 정의함과 동시에 호출
-		(function(){
+
 		var userId = "${member.userId}";
 		$.getJSON("/member/getAttachImg", {userId: userId}, function(arr){
 			console.log(arr);
@@ -100,22 +97,36 @@ $(document).ready(function() {
 			var str="";
 	        
 			$(arr).each(function(i,attach) {
-				if ('${img==null}') {//이미지가 없는경우
+				if ("${uuid}"==null) {//이미지가 없는경우
+					console.log("회원이미지 없음");
 					 $('.preview-img').attr('src','http://simpleicon.com/wp-content/uploads/account.png');
 				} 
 				else{
 					// 썸네일 나오게 처리
-	                  var fileCallPath = encodeURIComponent(obj.uploadPath +  "/s_" + obj.uuid + "_" + obj.fileName);
+					console.log("회원이미지 존재");
+	                  var fileCallPath = encodeURIComponent(attach.uploadPath +  "/s_" + attach.uuid + "_" + attach.fileName);
 	                  
-	                  var reader = new FileReader();
-
-	  	            reader.onload = function (e) {
-	  	                $('.preview-img').attr('src', '/display?fileName=" + fileCallPath + "');
-	  	            }
-					}
-				
+	                  //var reader = new FileReader();
+	  	          	 // reader.onload = function (e) {
+	  	 
+	  	            document.getElementById("preview-img").src = '/display?fileName=' + fileCallPath;
+	  	            
+	  	             // $('.preview-img').attr('src', /display?fileName=" + fileCallPath + ");
+	  	        }
+				});	
 			});
-		})();
+		  var formObj = $("#updateForm");
+		 $('#del_btn').on("click", function(e) {
+				e.preventDefault();//전송을 막음
+				var operation = $(this).data("oper");
+				console.log("operation : "+operation);
+				if (operation === 'delete') {
+					console.log("회원 탈퇴")
+					formObj.attr("action", "/member/delete?userId="+${member.userId}).attr("method", "post");
+					formObj.submit();
+				}
+				
+		 }); 
 
 
 });

@@ -1,5 +1,8 @@
 package org.cc.controller;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Random;
 
@@ -161,6 +164,8 @@ public class MemberController {
 		
 		log.info("memberDetail()..........");
 		model.addAttribute("member", service.getMemberInfo(userId));
+		model.addAttribute("uuid",service.getUuid(userId));
+		log.info(service.getUuid(userId));
 	
 	}
 	 /* 회원 수정 */
@@ -169,6 +174,7 @@ public class MemberController {
 		
 		log.info("updateInfo()..........");
 		model.addAttribute("member", service.getMemberInfo(userId));
+		
 
 	}
 	/* 회원 수정 */
@@ -179,6 +185,7 @@ public class MemberController {
 			log.info("vo.getAttachImg "+vo.getAttachImg());
 			 if (vo.getAttachImg() != null) {
 			        vo.getAttachImg().forEach(attach -> log.info("attach Img : "+attach));
+			        
 			    }
 				
 				service.updateInfo(vo);
@@ -193,5 +200,39 @@ public class MemberController {
 		public ResponseEntity<List<MemberAttachVO>> getAttachImg(String userId) {
 			log.info("getAttachImg " + userId);
 			return new ResponseEntity<>(service.getAttachImg(userId), HttpStatus.OK);
+		}
+		
+		// 삭제 처리
+		@PostMapping("/delete")
+		public String remove(MemberVO vo,HttpSession session,@RequestParam("userId") String userId, RedirectAttributes rttr){
+		
+			log.info("delete..." + userId);
+			List<MemberAttachVO> attachList = service.getAttachImg(userId);
+			if (service.remove(userId)) {
+				deleteFiles(attachList);  // 첨부파일 삭제
+				rttr.addFlashAttribute("result", "success");
+			}
+			session.invalidate();
+			return "redirect:/member/main";
+		}
+		private void deleteFiles(List<MemberAttachVO> attachList) {
+			if(attachList == null || attachList.size() == 0) {
+				return;
+			}
+			log.info("delete attach files........");
+			log.info(attachList);
+			
+			attachList.forEach(attach -> {
+				try {
+					Path file = Paths.get("C:\\Users\\BIT\\Desktop\\ColorCustom\\upload\\"+attach.getUploadPath()+"\\"+attach.getUuid()+"_"+attach.getFileName());
+					Files.deleteIfExists(file);
+					if(Files.probeContentType(file).startsWith("image")) {
+						Path thumbNail = Paths.get("C:\\Users\\BIT\\Desktop\\ColorCustom\\upload\\"+attach.getUploadPath()+"\\s_"+attach.getUuid()+"_"+attach.getFileName());
+						Files.delete(thumbNail);
+					}
+				} catch(Exception e) {
+					log.error("delete file error" + e.getMessage());
+				}
+			});
 		}
 }

@@ -32,4 +32,21 @@
 	set userName=#{userName}, userSex=#{userSex}, userBirth=#{userBirth},userEmail=#{userEmail}
 	where userId=#{userId}
 </update>
+
+<select id="getUuid" resultType="String">
+	select uuid
+	from member as m
+	join img_attach as i
+	on i.userId=m.userId
+	where m.userId=#{userId}
+	order by regDate desc limit 1
+</select>
+
+<update id="updateImg" >
+	update member set img ="O" where userId=#{userId}
+</update>
+
+<delete id="delete">
+		delete from member where userId=#{userId}
+	</delete>
 </mapper>

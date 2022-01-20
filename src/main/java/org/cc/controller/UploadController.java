@@ -3,6 +3,8 @@ package org.cc.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,10 +13,12 @@ import java.util.List;
 import java.util.UUID;
 
 import org.cc.domain.MemberAttachVO;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,14 +30,15 @@ import net.coobird.thumbnailator.Thumbnailator;
 @Controller
 @Log4j
 public class UploadController {
-	
+
 	private String getFolder() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();
 		String str = sdf.format(date);
 		return str.replace("-", File.separator);
 	}
-	//이미지 파일인지 확인
+
+	// 이미지 파일인지 확인
 	private boolean checkImageType(File file) {
 		try {
 			String contentType = Files.probeContentType(file.toPath());
@@ -48,10 +53,10 @@ public class UploadController {
 	public void uploadAjax() {
 		log.info("upload ajax");
 	}
-	
-	@PostMapping(value = "/uploadAjaxAction", produces = MediaType.APPLICATION_JSON_VALUE)	
+
+	@PostMapping(value = "/uploadAjaxAction", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public  ResponseEntity<List<MemberAttachVO>> uploadAjaxPost(MultipartFile[] uploadFile) {
+	public ResponseEntity<List<MemberAttachVO>> uploadAjaxPost(MultipartFile[] uploadFile) {
 		List<MemberAttachVO> list = new ArrayList<>();
 		String uploadFolder = "C:\\Users\\BIT\\Desktop\\ColorCustom\\upload";
 
@@ -59,8 +64,8 @@ public class UploadController {
 		// 폴더 생성하기
 		File uploadPath = new File(uploadFolder, uploadFolderPath);
 		log.info("프로필 이미지 업로드 경로 : " + uploadPath);
-		
-		if (uploadPath.exists() == false) {//폴더가 존재하지 않으면 새로 생성
+
+		if (uploadPath.exists() == false) {// 폴더가 존재하지 않으면 새로 생성
 			uploadPath.mkdirs(); // yyyy/MM/dd 폴더 생성
 		}
 
@@ -70,13 +75,13 @@ public class UploadController {
 			log.info("Upload File Name : " + multipartFile.getOriginalFilename());
 			log.info("Upload File Size : " + multipartFile.getSize());
 
-			String uploadFileName = multipartFile.getOriginalFilename();//파일 이름 설정
+			String uploadFileName = multipartFile.getOriginalFilename();// 파일 이름 설정
 
-			//파일명 랜덤생성 (UUID를 이용해서 고유한 파일명 생성)
+			// 파일명 랜덤생성 (UUID를 이용해서 고유한 파일명 생성)
 			UUID uuid = UUID.randomUUID();
 			attachDTO.setFileName(uploadFileName);
-			uploadFileName = uuid.toString() + "_" + uploadFileName;//랜덤생성 + 파일이름 저장
-			
+			uploadFileName = uuid.toString() + "_" + uploadFileName;// 랜덤생성 + 파일이름 저장
+
 			File saveFile = new File(uploadPath, uploadFileName);
 			try {
 				multipartFile.transferTo(saveFile);
@@ -88,13 +93,13 @@ public class UploadController {
 				if (checkImageType(saveFile)) {
 					attachDTO.setFileType(true);
 					FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_" + uploadFileName));
-					Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 100, 100); //섬네일 크기
+					Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 100, 100); // 섬네일 크기
 					thumbnail.close();
 				}
 
 				// add to List
 				list.add(attachDTO);
-				log.info("attachDTO : "+attachDTO);
+				log.info("attachDTO : " + attachDTO);
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -102,5 +107,52 @@ public class UploadController {
 
 		} // end for
 		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+
+	// 섬네일 데이터 전송하기
+	@GetMapping("/display")
+	@ResponseBody
+	public ResponseEntity<byte[]> getFile(String fileName) {
+		log.info("fileName: " + fileName);
+		File file = new File("C:\\Users\\\\BIT\\Desktop\\ColorCustom\\upload\\" + fileName);
+		log.info("file : " + file);
+		ResponseEntity<byte[]> result = null;
+
+		try {
+			HttpHeaders header = new HttpHeaders();
+			// 적당한 MIME 타입을 헤더에 추가
+			header.add("Content-Type", Files.probeContentType(file.toPath()));
+			result = new ResponseEntity<byte[]>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	// 서버에서 첨부파일 삭제
+	@PostMapping("/deleteFile")
+	@ResponseBody
+	public ResponseEntity<String> deleteFile(String fileName, String type) {
+		log.info("deleteFile : " + fileName);
+
+		File file;
+
+		try {
+			file = new File("C:\\Users\\BIT\\Desktop\\ColorCustom\\upload\\" + URLDecoder.decode(fileName, "UTF-8"));
+
+			file.delete();
+
+			if (type.equals("image")) {
+				String largeFileName = file.getAbsolutePath().replace("s_", "");
+				log.info("largetFileName : " + largeFileName);
+				file = new File(largeFileName);
+				file.delete();
+			}
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<String>("deleted", HttpStatus.OK);
 	}
 }

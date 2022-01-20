@@ -10,10 +10,9 @@ public class MemberVO {
 	private String userPwd; 
 	private String userName; 
 	private String userSex; 
-	
+	private String img;
 	private String userBirth;
 	private String userEmail;
-	private String userImage;
 	
 	private List<MemberAttachVO> attachImg;
 	

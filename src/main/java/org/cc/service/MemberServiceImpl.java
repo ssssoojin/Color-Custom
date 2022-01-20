@@ -53,17 +53,41 @@ public class MemberServiceImpl implements MemberService{
 	    if (vo.getAttachImg() == null) {
 	        return;
 	    }
+	   
 	    if(vo.getAttachImg() != null && vo.getAttachImg().size() > 0) { 
-	    vo.getAttachImg().forEach(attach -> {
-	        attach.setUserId(vo.getUserId());
-	        attachMapper.insert(attach);
-	    });
-	    }
-	
+	    	//if(vo.getImg()==null) {
+	    		//log.info("프로필 이미지 없음");
+			    vo.getAttachImg().forEach(attach -> {
+			        attach.setUserId(vo.getUserId());
+			        attachMapper.insert(attach);
+			        mapper.updateImg(vo);
+			    });
+	    	}
+//			  }else {
+//				  log.info("프로필 이미지 있음");
+//		    	 vo.getAttachImg().forEach(attach -> {
+//		    		 attach.setUserId(vo.getUserId());
+//		    		 attachMapper.update(attach);
+//			    });
+//			   }
+//	    }
 	}
 	public List<MemberAttachVO> getAttachImg(String userId){
 		log.info("get Attach list byuserId" + userId);
 		return attachMapper.findByUserId(userId);
+	}
+
+	@Override
+	public String getUuid(String userId) {
+		log.info("======================사용자의 프로필사진 getUuid========================" );
+		return mapper.getUuid(userId);
+	}
+	@Transactional
+	@Override
+	public boolean remove(String userId) {
+		log.info("remove..........." + userId);
+		attachMapper.deleteAll(userId);
+		return mapper.delete(userId) == 1;
 	}
 	
 

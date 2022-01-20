@@ -32,7 +32,7 @@
         <div class="col-md-offset-4 col-md-2">
         
            <div class = "change-myprofile-image">
-                <img class="preview-img" src="http://simpleicon.com/wp-content/uploads/account.png" alt="Preview Image" width="200" height="200"/>
+                <img class="preview-img" id="preview-img" src="http://simpleicon.com/wp-content/uploads/account.png" alt="Preview Image" width="200" height="200"/>
                 <div class="browse-button">
                     <!-- <i class="fa fa-pencil-alt"></i> -->
                     <input type="file" class="browse-input" required name="uploadFile" id="UploadedFile"/>
@@ -81,9 +81,9 @@
 				<input placeholder="이메일" type="email" name= "userEmail" value='<c:out value="${member.userEmail}" />'>
 			</div>
 			<div class="three-button">
-        	<a class="btn icon-btn btn-gray" href="/member/main"><span class="glyphicon btn-glyphicon glyphicon-repeat img-circle text"></span>취소</a>
+        	<a class="btn icon-btn btn-gray" data-oper="cancel"><span class="glyphicon btn-glyphicon glyphicon-repeat img-circle text"></span>취소</a>
 			<a class="btn icon-btn btn-pink" data-oper="update"><span class="glyphicon btn-glyphicon glyphicon-refresh img-circle text-warning"></span>수정</a>
-			<a class="btn icon-btn btn-danger" href="#"><span class="glyphicon btn-glyphicon glyphicon-trash img-circle text-danger"></span>탈퇴</a>
+			<a class="btn icon-btn btn-danger" data-oper="delete"><span class="glyphicon btn-glyphicon glyphicon-trash img-circle text-danger"></span>탈퇴</a>
        </div>
        </section>
        </form>
@@ -123,10 +123,31 @@ $(document).ready(function() {
             reader.readAsDataURL(input.files[0]);
         }
     }
+    var userId = "${member.userId}";
+	$.getJSON("/member/getAttachImg", {userId: userId}, function(arr){
+		console.log(arr);
+		
+		var str="";
+        
+		$(arr).each(function(i,attach) {
+			if ("${uuid}"==null) {//이미지가 없는경우
+				console.log("회원이미지 없음");
+				 $('.preview-img').attr('src','http://simpleicon.com/wp-content/uploads/account.png');
+			} 
+			else{
+				// 썸네일 나오게 처리
+				console.log("회원이미지 존재");
+                  var fileCallPath = encodeURIComponent(attach.uploadPath +  "/s_" + attach.uuid + "_" + attach.fileName);
+  	            document.getElementById("preview-img").src = '/display?fileName=' + fileCallPath;
+  	            
+  	        }
+		});	
+	});
     
 
     $(".browse-input").on('change', function(){
         readURL(this);
+        
     	
     });
     
@@ -136,6 +157,7 @@ $(document).ready(function() {
 		e.preventDefault();//전송을 막음
 		var operation = $(this).data("oper");
 		console.log("operation : "+operation);
+		
 		 if (operation === 'update') {
 		      console.log("수정 clicked");
 		      formObj.attr("action", "/member/updateInfo").attr("method", "post"); 
@@ -153,8 +175,13 @@ $(document).ready(function() {
 		          
 		      		formObj.append(str);
 		      });
-				      formObj.submit();
+		 }else if (operation === 'delete') {
+				formObj.attr("action", "/member/delete").attr("method", "post");
+			}
+		 else if(operation === "cancel"){
+			 formObj.attr("action", "/member/myInfo") 
 		 }
+			formObj.submit();
     });
     
     function showUploadFile(uploadResultArr){

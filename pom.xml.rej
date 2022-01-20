@@ -1,0 +1,13 @@
+diff a/pom.xml b/pom.xml	(rejected hunks)
+@@ -234,7 +234,11 @@
+             <version>${org.springframework-version}</version>
+         </dependency>
+         
++<<<<<<< HEAD
+         	<!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
++=======
++        <!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
++>>>>>>> d2c8e7dcd2562a74ce8f80c03ca095b0372b20ee
+ 		<dependency>
+ 			<groupId>net.coobird</groupId>
+ 			<artifactId>thumbnailator</artifactId>

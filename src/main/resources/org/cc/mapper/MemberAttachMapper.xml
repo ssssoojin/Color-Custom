@@ -14,6 +14,17 @@
  	<select id="findByUserId" resultType="org.cc.domain.MemberAttachVO">
  		select * from img_attach where userId = #{userId}
  	</select>
+ 	
+<!--회원 사진 수정 -->
+<update id="update">
+	update img_attach
+	set uuid=#{uuid}, uploadPath=#{uploadPath}, fileName=#{fileName},fileType=#{fileType}
+	where userId=#{userId}
+</update>
+
+<delete id="deleteAll">
+ 		delete from img_attach where userId = #{userId}
+ 	</delete>
 
 
 </mapper>

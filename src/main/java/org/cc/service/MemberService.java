@@ -17,4 +17,7 @@ public interface MemberService {
 	public void updateInfo(MemberVO vo);
 	
 	public List<MemberAttachVO> getAttachImg(String userId);
+	
+	public String getUuid(String userId);
+	public boolean remove(String userId);
 }
