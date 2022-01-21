@@ -5,12 +5,18 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.cc.domain.AttachFileDTO;
 import org.springframework.core.io.FileSystemResource;
@@ -21,9 +27,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -100,7 +108,7 @@ public class UploadController {
 
 			// 중복된 이름의 파일 처리
 			UUID uuid = UUID.randomUUID();
-			String uploadFileName = multipartFile.getOriginalFilename(); 
+			String uploadFileName = multipartFile.getOriginalFilename();
 			attachDTO.setFileName(uploadFileName); // 원래 파일 이름
 			uploadFileName = uuid.toString() + "_" + uploadFileName; // 파일 이름 설정: 뒤에 원래 파일 이름 붙이기
 
@@ -200,5 +208,58 @@ public class UploadController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<String>("deleted", HttpStatus.OK);
+	}
+	
+	// 캡쳐 이미지 저장
+	@ResponseBody
+	@PostMapping("/saveCapture")
+	public AttachFileDTO ImgSaveTest(@RequestParam HashMap<Object, Object> param, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+		
+		AttachFileDTO attachDTO = new AttachFileDTO();
+		
+		String binaryData = request.getParameter("imgSrc");
+		String itemName = request.getParameter("itemName");
+		attachDTO.setFileName(itemName);
+		
+		FileOutputStream stream = null;
+		
+		// 폴더 생성하기
+		String uploadFolder = "c:/upload";
+		File uploadPath = new File(uploadFolder, getFolder());
+		log.info("upload Path : " + uploadPath);
+		if (uploadPath.exists() == false) { // 폴더가 존재하지 않으면 새로 생성
+			uploadPath.mkdirs(); // yyyy/MM/dd 폴더 생성
+		}
+	
+		try {
+			System.out.println("binary file   "  + binaryData);
+			if(binaryData == null || binaryData.trim().equals("")) {
+			    throw new Exception();
+			}
+			binaryData = binaryData.replaceAll("data:image/png;base64,", "");
+			byte[] file = Base64.getDecoder().decode(binaryData);
+			UUID uuid = UUID.randomUUID();
+			itemName = uuid.toString();
+			
+			attachDTO.setUuid(uuid.toString()); // uuid
+			attachDTO.setUploadPath(getFolder()); // 파일 경로
+			attachDTO.setImage(true);
+			
+			stream = new FileOutputStream(uploadPath + "/" + itemName + ".png");
+			stream.write(file);
+			stream.close();
+			System.out.println("캡처 저장");
+		    
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("에러 발생");
+		}finally {
+			if(stream != null) {
+				stream.close();
+			}
+		}
+		
+		
+		return attachDTO;
 	}
 }

@@ -95,24 +95,38 @@ max-width: 1600px !important;}
             </div>
             <!-- /widget-header -->
             <div class="widget-content">
-              <div class="shortcuts"> <a href="javascript:;" class="shortcut">
-              <i class="shortcut-icon icon-list-alt"></i>
-              <span class="shortcut-label">반팔</span> </a><a href="javascript:;" class="shortcut">
-              <i class="shortcut-icon icon-bookmark"></i>
-              <span class="shortcut-label">긴팔</span> </a><a href="javascript:;" class="shortcut">
-              <i class="shortcut-icon icon-signal"></i> 
-              <span class="shortcut-label">반팔셔츠</span> </a><a href="javascript:;" class="shortcut"> 
-              <i class="shortcut-icon icon-comment"></i>
-              <span class="shortcut-label">긴팔셔츠</span> </a><a href="javascript:;" class="shortcut">
-              <i class="shortcut-icon icon-user"></i>
-              <span class="shortcut-label">민소매</span> </a><a href="javascript:;" class="shortcut">
-              <i class="shortcut-icon icon-file"></i>
-              <span class="shortcut-label">반바지</span> </a><a href="javascript:;" class="shortcut">
-              <i class="shortcut-icon icon-picture"></i> 
-              <span class="shortcut-label">긴바지</span> </a><a href="javascript:;" class="shortcut"> 
-              <i class="shortcut-icon icon-tag"></i>
-              <span class="shortcut-label">치마</span> </a> </div>
-              <!-- /shortcuts --> 
+              <div class="shortcuts"> 
+	              <a href="javascript:;" onclick="moveCustom(this.id);" class="shortcut" id="1">
+	              <i class="shortcut-icon icon-list-alt"></i>
+	              <span class="shortcut-label">반팔</span> </a>
+	              <a href="javascript:;" onclick="moveCustom(this.id);" class="shortcut" id="2">
+	              <i class="shortcut-icon icon-bookmark"></i>
+	              <span class="shortcut-label">긴팔</span> </a>
+	              <a href="javascript:;" onclick="moveCustom(this.id);" class="shortcut" id="3">
+	              <i class="shortcut-icon icon-signal"></i> 
+	              <span class="shortcut-label">반팔셔츠</span> </a>
+	              <a href="javascript:;" onclick="moveCustom(this.id);" class="shortcut" id="4"> 
+	              <i class="shortcut-icon icon-comment"></i>
+	              <span class="shortcut-label">긴팔셔츠</span> </a>
+	              <a href="javascript:;" onclick="moveCustom(this.id);" class="shortcut" id="5">
+	              <i class="shortcut-icon icon-user"></i>
+	              <span class="shortcut-label">민소매</span> </a>
+	              <a href="javascript:;" onclick="moveCustom(this.id);" class="shortcut" id="6">
+	              <i class="shortcut-icon icon-file"></i>
+	              <span class="shortcut-label">반바지</span> </a>
+	              <a href="javascript:;" onclick="moveCustom(this.id);" class="shortcut" id="7">
+	              <i class="shortcut-icon icon-picture"></i> 
+	              <span class="shortcut-label">긴바지</span> </a>
+	              <a href="javascript:;" onclick="moveCustom(this.id);" class="shortcut" id="8"> 
+	              <i class="shortcut-icon icon-tag"></i>
+	              <span class="shortcut-label">치마</span> </a>
+              </div>
+              <!-- /shortcuts -->
+              
+              <form id="form" action="/product/custom" method="post">
+	              <input type="hidden" id="itemNo" name="itemNo">
+         	  </form>
+              
             </div>
             <!-- /widget-content --> 
           </div>
@@ -324,6 +338,14 @@ max-width: 1600px !important;}
 	
 </div>
 	
+<script>
+	// 커스텀 페이지로 이동
+	function moveCustom(id) {
+		console.log(id);
+		$('#itemNo').val(id);
+		$('#form').submit();
+	}
+</script>
 
 
 <!-- 	<script>

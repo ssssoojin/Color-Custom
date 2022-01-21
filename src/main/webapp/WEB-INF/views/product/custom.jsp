@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,16 +11,16 @@
 
 <!-- font awesome cdn link  -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
 <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery-js/1.4.0/css/lightgallery.min.css">
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <!-- color picker -->
 <link rel="stylesheet" href="/resources/css/colorPick.min.css">
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<style>
+</style>
 </head>
 <body>
 	<%@include file="../includes/header.jsp"%>
@@ -27,7 +28,8 @@
 		<section class="home" id="home">
 			<div class="slide active">
 				<div class="image">
-					<img src="/resources/images/short_tshirt.png" alt="">
+					<h3>#${product.itemName}</h3>
+					<img src="/resources/images/${product.image}" alt="">
 				</div>
 				<div class="content">
 					<h3>공지사항</h3>
@@ -41,20 +43,28 @@
 
 			<div class="slide">
 				<div class="image">
-					<img id="custom_img" src="/resources/images/short_tshirt.png" alt="">
-					<div id="attachImgWrapper">
-						<div id="attachImg"></div>
+					<img class="custom_img" src="/resources/images/${product.image}" alt="">
+					<button class="delete-button">
+						<span class="icon"> 
+							<span class="lid"></span> 
+							<span class="can">
+							</span> <span class="trash"></span> 
+							<span class="text">Reset!</span>
+						</span>
+					</button>
+					<div class="attachImgWrapper">
+						<div class="attachImg"></div>
 					</div>
 				</div>
 				<div class="content">
 					<p style="margin-top: -30px; margin-bottom: -100px;">기본 설정</p>
 					<div class="box" style="height:150px;">
 						<div class="item">
-							색깔&nbsp;&nbsp;&nbsp;<div class="picker"></div>
+							색상&nbsp;&nbsp;&nbsp;<div class="picker"></div>
 						</div>
 						<div class="item" style="padding-top: 10px;">
 							사이즈&nbsp;&nbsp;&nbsp;
-							<select class="w3-input w3-border w3-round-large" name="msg">
+							<select id="selectSize" class="w3-input w3-border w3-round-large" name="size">
 								<option value="" disabled selected>사이즈를 선택하세요.</option>
 								<option value="1">S</option>
 								<option value="2">M</option>
@@ -75,20 +85,16 @@
 					</div>
 					<div class="controls">
 						<div class="fas fa-angle-left" onclick="prev()"></div>
-						<script>
-							let color = $('#custom_img').css('backgroundColor');
-							let img = $('.attachImg img').attr("src");
-						</script>
-						<div class="fas fa-angle-right" onclick="next()"></div>
+						<div class="fas fa-angle-right" onclick="saveCustom();"></div>
 					</div>
 				</div>
 			</div>
 
 			<div class="slide">
-				<div class="image">
-					<img id="custom_img" src="/resources/images/short_tshirt.png" alt="">
-					<div id="attachImgWrapper">
-						<div id="attachImg"></div>
+				<div class="image" id="result_img">
+					<img class="custom_img" src="/resources/images/${product.image}" alt="">
+					<div class="attachImgWrapper resultWrapper">
+						<div class="attachImg resultImg"></div>
 					</div>
 				</div>
 				<div class="content">
@@ -96,12 +102,21 @@
 					<div class="receipt">
 						<header class="receipt__header">
 							<p class="receipt__title">CC</p>
-							<!-- <p class="receipt__date">2021-01-12</p> -->
+							<span>${product.itemName}</span>
 						</header>
 						<dl class="receipt__list">
 							<div class="receipt__list-row">
+								<dt class="receipt__item">색상</dt>
+								<dd class="receipt__cost color"></dd>
+							</div>
+							<div class="receipt__list-row">
+								<dt class="receipt__item">사이즈</dt>
+								<dd class="receipt__cost size"></dd>
+							</div>
+							<br>
+							<div class="receipt__list-row">
 								<dt class="receipt__item">기본 금액</dt>
-								<dd class="receipt__cost">￦10,000</dd>
+								<dd class="receipt__cost">￦<fmt:formatNumber value="${product.price}" pattern="#,###" /></dd>
 							</div>
 							<div class="receipt__list-row">
 								<dt class="receipt__item">이미지 아이콘</dt>
@@ -109,7 +124,7 @@
 							</div>
 							<div class="receipt__list-row receipt__list-row--total">
 								<dt class="receipt__item">Total</dt>
-								<dd class="receipt__cost">￦15,000</dd>
+								<dd class="receipt__cost">￦<fmt:formatNumber value="${product.price+5000}" pattern="#,###" /></dd>
 							</div>
 						</dl>
 					</div>
@@ -141,22 +156,28 @@
 	<script src="/resources/js/colorPick.min.js"></script>
 	
 	<script type="text/javascript">
+		let curColor;
+		let curSize;
+		
 		// 썸네일 클릭 이벤트
 		function showImage(fileCallPath) {
-			$("#attachImg").show();
-			$("#attachImg")
+			$(".attachImg").show();
+			$(".attachImg")
 			.html("<img src='/display?fileName=" + encodeURI(fileCallPath) + "'>")
 			.css({width: '100%', height: '100%'});
 			
-			
 			// 이미지를 다시 클릭하면 사라지도록 처리
-			$("#attachImg").on("click", function(e) {
-				// $("#attachImg").animate({width: '0%', height: '0%'}, 1000);
-				$('#attachImg').hide();
+			$(".attachImg").on("click", function(e) {
+				$('.attachImg').hide();
 			});
-			setImg("<img src='/display?fileName=" + encodeURI(fileCallPath) + "'>");
+			
+			// 결과 페이지 이미지는 클릭해도 사라지지 않게 처리
+			$('.resultImg').on("click", function(e) {
+				$('.attachImg').show();
+				$('.resultImg').show();
+			});
 		}
-	
+		
 		// 정규식을 이용해서 파일 확장자 체크
 		var regex = new RegExp("(.*?)\.(exe|sh|zip|alz|txt|xlsx|pdf|html|css|jsp|show|hwp)$");
 		var maxSize = 5242880;
@@ -257,15 +278,13 @@
 			height: "250px",
 			border: "3px dotted black"
 		};
-		
 		var small_style = {
 			position : "absolute",
 			width : "250px",
 			height : "250px"
 		};
-		$('#attachImgWrapper').css(big_style);
 		
-		// 옷 색깔 변경
+		// 옷 색상 변경
 		$(".picker").colorPick({
 					'initialColor' : 'white',
 					//'palette': ["#1abc9c", "#16a085", "#2ecc71", "#27ae60", "#3498db", "#2980b9", "#9b59b6", "#8e44ad", "#34495e", "#2c3e50", "#f1c40f", "#f39c12", "#e67e22", "#d35400", "#e74c3c", "#c0392b", "#ecf0f1"],
@@ -276,17 +295,17 @@
 							'backgroundColor' : this.color,
 							'color' : this.color
 						});
-						$('#custom_img').css({
+						$('.custom_img').css({
 							'backgroundColor' : this.color
 						});
-						// 옷 색깔에 관계없이 이미지 위치 잘 보이도록 변경
-						if (this.color == "WHITE") {
+						// 옷 색상에 관계없이 이미지 위치 잘 보이도록 변경
+						if (this.color == "WHITE" || this.color == "YELLOW") {
 							big_style.border = '3px dotted black';
 							// console.log(big_style.border);
-							$('#attachImgWrapper').css(big_style);
+							$('.attachImgWrapper').css({'border' : '3px dotted black'});
 						} else {
 							big_style.border = '3px dotted white';
-							$('#attachImgWrapper').css(big_style);
+							$('.attachImgWrapper').css({'border' : '3px dotted white'});
 						}
 						setColor(this.color);
 					}
@@ -294,53 +313,118 @@
 		
 		// 색 변경될 때마다 호출
 		function setColor(color) {
-			console.log(color);
+			curColor = color;
 		}
 		
-		function setImg(img) {
-			console.log(img);
+		// 사이즈 정보 저장
+		$('#selectSize').on('change', function() {
+			curSize = $("#selectSize option:selected").text();
+		});
+		
+		// 커스텀 정보 넘김
+		function saveCustom() {
+			// 커스텀 정보 저장
+			var custom = {
+				'color' : curColor,
+				'size' : curSize,
+			};
+			// console.log(custom.size);
+			if(custom.size === undefined) {
+				alert('사이즈를 선택해주세요');
+				return;
+			}
+			
+			$('.color').html(custom.color);
+			$('.size').html(custom.size);
+			// console.log(custom.color, custom.size);
+			next(); // 다음 페이지로 이동
 		}
 		
-		// 커스텀 정보 저장
-		function saveCustom(color, img) {
-			let custom = [];
-			custom.push(color);
-			custom.push(img);
-			console.log(custom[0]);
-			console.log(custom[1]);
-			return custom;
-		}
+		// 리셋 버튼
+		const deleteButton = $('.delete-button');
+        deleteButton.on('click', function () {
+            deleteButton.addClass('clicked');
+			
+            // 색, 이미지 초기화
+            $('.custom_img').css({
+				'backgroundColor' : 'WHITE'
+			});
+            $('.attachImg').hide();
+            $('.attachImgWrapper').css({'border' : '3px dotted black'});
+            
+            setTimeout(function () {
+                console.log('Works!');
+                deleteButton.removeClass('clicked');
+            }, 1000);
+
+        });
 		
-		// db에 넣을 데이터
-		const form = {
-			userId : 'aaa',
-			itemName : 'good',
-			color : '',
-			size : '',
-			quantity : '1',
-			price : '2000',
-			category : '4', // 액세서리
-			image : ''
-		}
 		// 장바구니 버튼
 		function moveCart() {
+			screenShot($('#result_img'));
+		}
+		// 구매 버튼
+		function movePurchase() {
+			if (confirm('상품을 구매하시겠습니까?')) {
+				location.href = '/purchase';
+			}
+		}
+				
+		// 이미지 캡쳐 및 업로드
+		function screenShot(target) {
+			if (target != null && target.length > 0) {
+				var t = target[0];
+				html2canvas(t).then(function(canvas) {
+					var myImg = canvas.toDataURL();
+					myImg = myImg.replace("data:image/png;base64,", "");
+					
+					$.ajax({
+						url : '/saveCapture',
+						data : {              
+							"imgSrc" : myImg,
+							"itemName" : "${product.itemName}"
+						}, 
+						type : 'POST',
+						dataType: 'json',
+						success : function (result) {
+							console.log(result);
+							var fileCallPath = encodeURIComponent(result.uploadPath +  "/" + result.uuid + ".png");
+							console.log(fileCallPath);
+							transferData(fileCallPath);
+						},
+						error : function(a, b, c) {
+							alert("error");
+						}
+					});
+				});
+			}
+		}
+		
+		function transferData(fileCallPath) {
+			// db에 넣을 데이터
+			const form = {
+				userId : '${member.userId}',
+				itemName : '${product.itemName}',
+				color : $('.color').text(),
+				size : $('.size').text(),
+				quantity : '1',
+				price : '${product.price+5000}',
+				category : '${product.category}',
+				image : fileCallPath
+			};
+			
 			if (confirm('장바구니에 추가하시겠습니까?')) {
 				$.ajax({
 					url : '/cart',
 					type : 'POST',
 					data : form,
+					dataType: "text",
 					success : function(result) {
 						if (confirm('장바구니로 이동하시겠습니까?')) {
 							location.href = '/cart';
 						}
 					}
 				});
-			}
-		}
-		// 구매 버튼
-		function movePurchase() {
-			if (confirm('상품을 구매하시겠습니까?')) {
-				location.href = '/purchase';
 			}
 		}
 	</script>
