@@ -12,4 +12,6 @@ public interface FeedService {
 	public FeedVO get(Long feedNo);
 	
 	public List<FeedVO> getAll();
+	
+	public void insert(FeedVO feed);
 }

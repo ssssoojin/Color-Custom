@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
@@ -27,7 +28,7 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 </head>
 <body>
-	<jsp:include page="includes/header.jsp" />
+	<jsp:include page="../includes/header.jsp" />
 	<div class="container">
 		<div class="Cartmain">
 			<hr style="border: solid 5px #FC7B70;">
@@ -49,6 +50,7 @@
 			<!-- 사용자 정보 입력 -->
 			<ul class="cbp_tmtimeline">
 				<!-- forEach -->
+				<c:forEach var="item" items="${itemList}">
 				<li>
 					<div class="cbp_tmicon">
 						<i class="fas fa-gift"></i>
@@ -57,29 +59,51 @@
 						<div class="col-sm-5 ">
 							<img src="/resources/images/T-shirt.jpg" class="rounded-circle"
 								alt="Cinque Terre" width="100%" style="margin: 0 auto">
-							<h2 style="text-align: center;">상품 이름</h2>
+							<h2 style="text-align: center; font-size: 25px;">${item.itemName }</h2>
 						</div>
 						<div class= "col-sm-7 row divinfo" style="display: flex;">
 							<label class="col-sm-3" for="color">색상</label>
- 							<input type="text" class="form-control col-sm-9" readonly placeholder="색상" id="color">
+ 							<input type="text" class="form-control col-sm-9" readonly placeholder="${item.color }" id="color">
  							<label class="col-sm-3" for="size">사이즈</label>
- 							<input type="text" class="form-control col-sm-9" readonly placeholder="사이즈" id="size">
+ 							<input type="text" class="form-control col-sm-9" readonly placeholder="${item.size }" id="size">
  							<label class="col-sm-3" for="count">수량</label>
- 							<input type="text" class="form-control col-sm-9" readonly placeholder="수량" id="count">
-							<input type="text" class="form-control col-sm-12" readonly placeholder="가격" id="price">
+ 							<input type="text" class="form-control col-sm-9" readonly placeholder="${item.quantity }" id="count">
+							<input type="text" class="form-control col-sm-12" readonly placeholder="${item.price }" id="price">
 						</div>
 					</div>
 				</li>
+				</c:forEach>
 				<!-- forEach -->
 				<li>
-					<input type="text" class="form-control col-sm-5" readonly placeholder="총가격" id="priceSum" style="margin-left: 40% ">
+					<input type="text" class="form-control col-sm-5" readonly value="${sumPrice}" id="priceSum" style="margin-left: 40% ">
 				</li>
 			</ul>
 			<hr style="border: solid 5px #FC7B70;">
 		</div>
-		<button type="button" class="btn btn-secondary col-sm-5" style="left:25%;">구매</button>
+		<button type="button" class="btn btn-secondary col-sm-5" style="left:25%;" onclick="Purchase()">구매</button>
+		<form action="/mypage/purchaseCompleted" method="post" id="purchaseCompleted">
+		</form>
 	</div>
-	<jsp:include page="includes/footer.jsp" />
+	<jsp:include page="../includes/footer.jsp" />
+	<script src="https://code.jquery.com/jquery-2.2.0.min.js"
+		type="text/javascript"></script>
+	<script type="text/javascript">
+		function Purchase(){
+			var str='';
+			<c:forEach var="item" items="${itemList}">
+				str+= '<input type="hidden" name="itemIndex" value="'+${item.cartNo}+'" >';
+			</c:forEach>
+			str += '<input type="hidden" name="recipient" value="'+$("#userName").val()+'" >';
+			str += '<input type="hidden" name="phone" value="'+$("#phoneNo").val()+'" >';
+			str += '<input type="hidden" name="address" value="'+$("#address").val()+'" >';
+			str += '<input type="hidden" name="detailaddress" value="'+$("#detailaddress").val()+'" >';
+			str += '<input type="hidden" name="deliveryMemo" value="'+$("#Delmemo").val()+'" >';
+			str += '<input type="hidden" name="price" value="'+$("#priceSum").val()+'" >';
+			
+			$("#purchaseCompleted").append(str);
+			$("#purchaseCompleted").submit();
+		}
+	</script>
 </body>
 </html>
 

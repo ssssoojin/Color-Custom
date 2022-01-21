@@ -24,6 +24,6 @@ public class PaymentItemMapperTest {
 	
 	@Test
 	public void testGetList() {
-		mapper.getList().forEach(paymentItem -> log.info(paymentItem));
+		mapper.getList("conan").forEach(paymentItem -> log.info(paymentItem));
 	}
 }

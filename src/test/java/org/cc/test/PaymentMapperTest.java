@@ -1,6 +1,6 @@
 package org.cc.test;
 
-import org.cc.service.PaymentItemService;
+import org.cc.mapper.PaymentMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +13,15 @@ import lombok.extern.log4j.Log4j;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
-public class PaymentItemServiceTest {
-	@Setter(onMethod_ = {@Autowired})
-	private PaymentItemService service;
+public class PaymentMapperTest {
+
+	@Setter(onMethod=@__({ @Autowired }))
+	private PaymentMapper mapper;
 	
 	@Test
 	public void testGetList() {
-		service.getList("conan").forEach(paymentItem -> log.info(paymentItem));
+		log.info("List 출력~~~");
+		mapper.getList("conan").forEach(feed -> log.info(feed));
 	}
+
 }

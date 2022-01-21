@@ -147,32 +147,5 @@ public class MemberController {
 	     String num = Integer.toString(checkNum);
 	     return num;
     }
-  
-    /* 회원 상세 */
-	@GetMapping("/myInfo")
-	public void memberDetail(@RequestParam("userId") String userId, Model model) {
-		
-		log.info("memberDetail()..........");
-		model.addAttribute("member", service.getMemberInfo(userId));
-	
-	}
-	 /* 회원 수정 */
-	@GetMapping("/updateInfo")
-	public void updateInfo(@RequestParam("userId") String userId, Model model) {
-		
-		log.info("updateInfo()..........");
-		model.addAttribute("member", service.getMemberInfo(userId));
 
-	}
-	/* 회원 수정 */
-	@PostMapping("/updateInfo")
-	public String updateInfo(MemberVO vo, RedirectAttributes rttr) {
-				log.info("updateInfo2: " + vo.getUserBirth());
-				
-				service.updateInfo(vo);
-				
-				return "redirect:/member/myInfo?userId="+vo.getUserId();
-			}	
-			
-	
 }

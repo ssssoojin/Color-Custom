@@ -39,4 +39,10 @@ public class FeedServiceImpl implements FeedService {
 		return mapper.getAll();
 	}
 
+	@Override
+	public void insert(FeedVO feed) {
+		log.info("insert Feed...."+feed);
+		mapper.insert(feed);
+	}
+
 }

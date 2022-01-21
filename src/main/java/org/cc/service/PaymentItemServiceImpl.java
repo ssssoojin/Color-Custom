@@ -18,9 +18,16 @@ public class PaymentItemServiceImpl implements PaymentItemService {
 	private PaymentItemMapper mapper;
 	
 	@Override
-	public List<PaymentItemVO> getList() {
+	public List<PaymentItemVO> getList(String userId) {
 		log.info("paymentItemService....");
-		return mapper.getList();
+		return mapper.getList(userId);
+	}
+
+	@Override
+	public void insertList(List<PaymentItemVO> items) {
+		for(PaymentItemVO item : items) {
+			mapper.insert(item);
+		}
 	}
 
 }

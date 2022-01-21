@@ -15,4 +15,5 @@ public interface FeedMapper {
 	
 	public List<FeedVO> getAll();
 	
+	public int insert(FeedVO feed);
 }
