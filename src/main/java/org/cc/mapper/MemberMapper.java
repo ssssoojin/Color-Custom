@@ -19,4 +19,6 @@ public interface MemberMapper {
 	public void updateImg(MemberVO vo);
 	public int delete(String userId);
 	
+	public MemberVO read(String userId);
+	
 }

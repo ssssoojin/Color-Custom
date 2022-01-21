@@ -49,4 +49,6 @@
 <delete id="delete">
 		delete from member where userId=#{userId}
 	</delete>
+	
+
 </mapper>

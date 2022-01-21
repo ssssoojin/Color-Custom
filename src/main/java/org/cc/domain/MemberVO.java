@@ -15,5 +15,5 @@ public class MemberVO {
 	private String userEmail;
 	
 	private List<MemberAttachVO> attachImg;
-	
+
 }
